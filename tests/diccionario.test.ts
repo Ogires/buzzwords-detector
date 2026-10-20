@@ -1,7 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { CATEGORIAS, DICCIONARIO } from "../src/diccionario";
+import bruto from "../data/diccionario.json";
+import { CATEGORIAS, DICCIONARIO, esEntrada, VERSION_CATALOGO } from "../src/diccionario";
 
 describe("integridad del diccionario", () => {
+  it("el JSON del repo es la fuente única: versión presente y cero entradas inválidas", () => {
+    expect(typeof bruto.version).toBe("number");
+    expect(bruto.version).toBeGreaterThan(0);
+    expect(bruto.actualizado).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(bruto.entradas.length).toBe(DICCIONARIO.length); // nada se descarta en silencio
+    for (const e of bruto.entradas) expect(esEntrada(e)).toBe(true);
+    expect(VERSION_CATALOGO).toBe(bruto.version);
+  });
+
   it("tiene al menos 215 entradas", () => {
     expect(DICCIONARIO.length).toBeGreaterThanOrEqual(215);
   });
