@@ -69,7 +69,8 @@ Para testear: `npm test` (24 tests, Vitest + jsdom, sin red).
 ## Publicación en Chrome Web Store
 
 El CI genera `buzzwords-detector.zip` (artifact de cada build): súbelo tal cual en el
-[Developer Dashboard](https://chrome.chrome.com/webstore/devconsole) (cuenta de developer: 5 $ una sola vez).
+[Developer Dashboard](https://chrome.google.com/webstore/devconsole) (cuenta de developer: 5 $ una sola vez).
+**Guía completa paso a paso (cuenta, formulario, permisos y review): [`docs/publicacion-cws.md`](docs/publicacion-cws.md).**
 Permisos a declarar: `activeTab` (análisis bajo demanda al pulsar el icono) y `scripting` (inyectar dicho análisis). Sin recopilación de datos.
 
 ## Stack
