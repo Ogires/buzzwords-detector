@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { CATEGORIAS, DICCIONARIO } from "../src/diccionario";
 
 describe("integridad del diccionario", () => {
-  it("tiene al menos 75 entradas", () => {
-    expect(DICCIONARIO.length).toBeGreaterThanOrEqual(75);
+  it("tiene al menos 215 entradas", () => {
+    expect(DICCIONARIO.length).toBeGreaterThanOrEqual(215);
   });
 
   it("no tiene patrones duplicados", () => {

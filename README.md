@@ -19,7 +19,7 @@ Extensión de Chrome (Manifest V3) que **resalta la jerga corporativa** de cualq
 │ Clic icono → popup                                  │
 │   └─ chrome.scripting.executeScript (activeTab)     │
 │        └─ content.js (mundo aislado):               │
-│             · regex unicode sobre 84 términos ES+EN │
+│             · regex unicode sobre 221 términos ES+EN│
 │             · TreeWalker sobre nodos de texto       │
 │             · <span> con tooltip CSS puro           │
 │        └─ devuelve stats → popup pinta el           │
@@ -47,8 +47,9 @@ El **Índice de Humo** = buzzwords por cada 1.000 palabras, con escala científi
 | circle back | lo retomo luego | no pienso responderte ahora |
 | deuda técnica | deuda técnica | la factura que le dejarás a tu sucesor |
 | low hanging fruit | lo más fácil de conseguir | la excusa más vaga disponible |
+| gran familia | equipo muy unido | nadie cobra las horas extra |
 
-84 términos en 5 categorías (estrategia, producto, reuniones, marketing, feedback). Detalle técnico: las regex usan lookarounds unicode (`(?<![\p{L}])(?![\p{L}])`) porque `\b` no entiende acentos y matchearía *holistic* dentro de *holística*.
+221 términos en 6 categorías (estrategia, producto, reuniones, marketing, feedback y RRHH). Detalle técnico: las regex usan lookarounds unicode (`(?<![\p{L}])(?![\p{L}])`) porque `\b` no entiende acentos y matchearía *holistic* dentro de *holística*.
 
 ## Probarla en modo developer
 
