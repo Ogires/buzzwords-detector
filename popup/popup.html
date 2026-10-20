@@ -5,7 +5,25 @@
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
-  <p>Cargando detector…</p>
+  <header>
+    <h1>Detector de <span>Buzzwords</span></h1>
+    <p class="sub">Antihumo corporativo · 0 peticiones de red</p>
+  </header>
+  <div id="estado" class="estado" aria-live="polite">Escaneando página…</div>
+  <section id="resultado" hidden>
+    <div class="indice">
+      <div class="numero"><span id="indice">0</span><small>/1000 palabras</small></div>
+      <div id="escala" class="escala"></div>
+    </div>
+    <h2>Top jerga</h2>
+    <ol id="top"></ol>
+    <p id="total" class="total"></p>
+  </section>
+  <div class="acciones">
+    <button id="reescanear">Re-escanear</button>
+    <button id="limpiar" class="secundario">Quitar resaltado</button>
+  </div>
+  <footer><a href="https://github.com/Ogires/buzzwords-detector" target="_blank" rel="noreferrer">Código fuente</a> · hecho en la factoría de miniapps</footer>
   <script src="../popup.js"></script>
 </body>
 </html>
