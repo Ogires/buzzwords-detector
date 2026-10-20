@@ -1,16 +1,51 @@
+import type { Entrada } from "./diccionario";
+
 export interface Match {
   inicio: number;
   fin: number;
+  entrada: Entrada;
 }
 
-export function compilarDiccionario(entradas: never[]): unknown[] {
-  return entradas;
+interface Compilada {
+  entrada: Entrada;
+  regex: RegExp;
 }
 
-export function buscarEnTexto(_texto: string, _compilado: unknown[]): Match[] {
-  return [];
+// Lookarounds con \p{L}\p{N} (y flag u): el \b clásico no entiende acentos
+// y matchearía "holistic" dentro de "holística".
+export function compilarDiccionario(entradas: Entrada[]): Compilada[] {
+  return entradas.map((entrada) => ({
+    entrada,
+    regex: new RegExp(
+      `(?<![\\p{L}\\p{N}])(?:${entrada.patron.replace(/ /g, "\\s+")})(?![\\p{L}\\p{N}])`,
+      "giu"
+    ),
+  }));
 }
 
-export function contarPalabras(_texto: string): number {
-  return 0;
+export function buscarEnTexto(texto: string, diccionario: Compilada[]): Match[] {
+  const todos: Match[] = [];
+  for (const { entrada, regex } of diccionario) {
+    regex.lastIndex = 0;
+    let m: RegExpExecArray | null;
+    while ((m = regex.exec(texto)) !== null) {
+      todos.push({ inicio: m.index, fin: m.index + m[0].length, entrada });
+      if (m[0].length === 0) regex.lastIndex++; // seguridad ante patrones vacíos
+    }
+    regex.lastIndex = 0;
+  }
+  todos.sort((a, b) => a.inicio - b.inicio || b.fin - a.fin - (a.fin - a.inicio));
+  const sinSolapes: Match[] = [];
+  let ultimoFin = -1;
+  for (const m of todos) {
+    if (m.inicio >= ultimoFin) {
+      sinSolapes.push(m);
+      ultimoFin = m.fin;
+    }
+  }
+  return sinSolapes;
+}
+
+export function contarPalabras(texto: string): number {
+  return texto.split(/\s+/).filter((p) => p.length > 0).length;
 }
