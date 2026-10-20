@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Detector de Buzzwords",
-  "version": "1.1.0",
-  "description": "Resalta la jerga corporativa (ES+EN) de la página y la traduce a español real. Sin red, sin bromas.",
+  "version": "1.2.0",
+  "description": "Resalta la jerga corporativa (ES+EN) de la página y la traduce: la real y la sarcástica. Sin cuentas, sin rastreo, sin humo.",
   "permissions": ["activeTab", "scripting"],
   "action": {
     "default_popup": "popup/popup.html",

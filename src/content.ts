@@ -1,17 +1,21 @@
 // src/content.ts — se inyecta con chrome.scripting.executeScript({files:["content.js"]})
 // Pegamento con las APIs de Chrome: toda la lógica vive en módulos ya testeados.
 import { DICCIONARIO } from "./diccionario";
+import { cargarDiccionario, URL_CATALOGO } from "./diccionario-remoto";
 import { limpiar, resaltar } from "./resaltar";
 import type { Stats } from "./stats";
 
 interface BwdWindow {
-  __bwd?: boolean;
+  __bwd?: () => Promise<void>;
 }
 
 declare const window: Window & BwdWindow;
 
-function escanear(): Stats {
-  return resaltar(document.body, DICCIONARIO);
+async function escanear(): Promise<void> {
+  const catalogo = await cargarDiccionario(URL_CATALOGO, DICCIONARIO);
+  const stats = resaltar(document.body, catalogo.entradas);
+  stats.catalogo = { origen: catalogo.origen, version: catalogo.version };
+  enviar(stats);
 }
 
 function enviar(stats: Stats): void {
@@ -22,15 +26,15 @@ function enviar(stats: Stats): void {
 (function main() {
   if (window.__bwd) {
     // ya estaba inyectado en esta pestaña: re-escanear y callar
-    enviar(escanear());
+    void window.__bwd();
     return;
   }
-  window.__bwd = true;
+  window.__bwd = escanear;
   chrome.runtime.onMessage.addListener((mensaje: { accion?: string }) => {
     if (mensaje?.accion === "limpiar") {
       limpiar(document.body);
       enviar({ total: 0, palabras: 0, indice: 0, top: [] });
     }
   });
-  enviar(escanear());
+  void escanear();
 })();

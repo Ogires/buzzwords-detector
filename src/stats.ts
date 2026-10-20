@@ -9,11 +9,17 @@ export interface Termino {
   n: number;
 }
 
+export interface CatalogoInfo {
+  origen: "remoto" | "local";
+  version: number;
+}
+
 export interface Stats {
   total: number;
   palabras: number;
   indice: number;
   top: Termino[];
+  catalogo?: CatalogoInfo;
 }
 
 export function calcularStats(recuentos: Map<Entrada, number>, palabras: number): Stats {

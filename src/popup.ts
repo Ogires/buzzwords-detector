@@ -18,6 +18,11 @@ function pintar(stats: Stats): void {
     stats.total === 0
       ? "Esta página no usa jerga. Sospechoso."
       : `${stats.total} buzzwords en ${stats.palabras.toLocaleString("es-ES")} palabras`;
+  $("#catalogo").textContent = stats.catalogo
+    ? stats.catalogo.origen === "remoto"
+      ? `Catálogo v${stats.catalogo.version} · actualizado al vuelo`
+      : `Catálogo v${stats.catalogo.version} · empaquetado (sin red)`
+    : "";
   marcarBadge(stats.total);
 }
 

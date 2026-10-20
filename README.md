@@ -8,9 +8,13 @@ Extensión de Chrome (Manifest V3) que **resalta la jerga corporativa** de cualq
 
 ## 🛡️ Privacidad de verdad
 
-- **Cero peticiones de red.** Todo el análisis es local: el diccionario va embebido y la extensión no habla con ningún servidor. Compruébalo: F12 → Network mientras la usas.
-- **Cero permisos de host.** Usa `activeTab`: no toca ninguna página hasta que **tú** pulsas el icono. Ni contenido, ni historial, ni cookies.
+- **Cero permisos de host y cero rastreo.** No hay cuentas, ni cookies, ni analítica, ni datos personales. Lo único que puede descargar es el **catálogo de términos** (un JSON público) desde GitHub al pulsar el icono — sin datos tuyos dentro de la petición. Sin conexión o si la página lo bloquea, usa el catálogo empaquetado en la extensión.
+- **`activeTab`: no toca ninguna página hasta que tú pulsas el icono.** Ni contenido en segundo plano, ni historial.
 - No recopila nada porque no hay nada que recopilar.
+
+## 🔄 Catálogo actualizable sin tocar la extensión
+
+El diccionario vive en [`data/diccionario.json`](data/diccionario.json). Al escanear, la extensión intenta cargar la última versión desde este repo y, si no puede, usa la empaquetada en el build. **Añadir términos = editar el JSON y hacer merge**: todos los usuarios lo reciben al instante, sin republicar en la tienda. El JSON remoto se valida antes de usarse (estructura y regex compilables), con suelo mínimo de entradas para que una edición desastrosa nunca deje a nadie sin detector.
 
 ## Cómo funciona
 
@@ -19,13 +23,15 @@ Extensión de Chrome (Manifest V3) que **resalta la jerga corporativa** de cualq
 │ Clic icono → popup                                  │
 │   └─ chrome.scripting.executeScript (activeTab)     │
 │        └─ content.js (mundo aislado):               │
-│             · regex unicode sobre 221 términos ES+EN│
+│             · catálogo: JSON del repo (remoto)      │
+│               con fallback al empaquetado           │
+│             · regex unicode sobre 220+ términos     │
 │             · TreeWalker sobre nodos de texto       │
 │             · <span> con tooltip CSS puro           │
 │        └─ devuelve stats → popup pinta el           │
 │           Índice de Humo + top jerga + badge        │
 └─────────────────────────────────────────────────────┘
-   Sin backend · 0 peticiones de red · 0 €
+   Sin backend propio · sin permisos de host · 0 €
 ```
 
 El **Índice de Humo** = buzzwords por cada 1.000 palabras, con escala científica:
@@ -49,7 +55,7 @@ El **Índice de Humo** = buzzwords por cada 1.000 palabras, con escala científi
 | low hanging fruit | lo más fácil de conseguir | la excusa más vaga disponible |
 | gran familia | equipo muy unido | nadie cobra las horas extra |
 
-221 términos en 6 categorías (estrategia, producto, reuniones, marketing, feedback y RRHH). Detalle técnico: las regex usan lookarounds unicode (`(?<![\p{L}])(?![\p{L}])`) porque `\b` no entiende acentos y matchearía *holistic* dentro de *holística*.
+220 términos en 6 categorías (estrategia, producto, reuniones, marketing, feedback y RRHH) — y creciendo vía JSON. Detalle técnico: las regex usan lookarounds unicode (`(?<![\p{L}])(?![\p{L}])`) porque `\b` no entiende acentos y matchearía *holistic* dentro de *holística*.
 
 ## Probarla en modo developer
 

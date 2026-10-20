@@ -43,8 +43,9 @@ cd dist && zip -r ../buzzwords-detector.zip . && cd ..
    - **Justificación de permisos**:
      - `activeTab`: "accede solo a la pestaña activa cuando el usuario pulsa el icono, para analizarla bajo demanda"
      - `scripting`: "inyecta el script de análisis en la pestaña activa al pulsar el icono"
-   - Declaración de datos: marcar que **NO se recopila ni envía ningún dato de usuario** (es literal: 0 peticiones de red).
-   - Código remoto: NO usamos código remoto (todo va empaquetado).
+   - En la declaración de datos, anotar que la extensión **descarga el catálogo de términos (JSON público) desde `raw.githubusercontent.com`** al analizar; no se envía ningún dato del usuario ni se recopila nada.
+   - Declaración de datos: marcar que **NO se recopila ni envía ningún dato de usuario** (0 peticiones propias: solo el fetch del JSON público del catálogo).
+   - Código remoto: NO usamos código remoto (solo **datos** remotos, el JSON del catálogo; el código va todo empaquetado — esto es lo que CWS permite y distingue de código remoto prohibido).
    - Política de privacidad: no exigida si no recopilas datos; opcionalmente enlazar el README.
 4. **Enviar para revisión.**
 
