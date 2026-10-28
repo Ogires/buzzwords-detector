@@ -1,3 +1,6 @@
 node_modules/
 dist/
 *.zip
+
+# Plan de implementación: notas de trabajo para el agente, no se publica
+docs/plans/*-mv1.md
