@@ -11,8 +11,8 @@ interface Compilada {
   regex: RegExp;
 }
 
-// Lookarounds con \p{L}\p{N} (y flag u): el \b clásico no entiende acentos
-// y matchearía "holistic" dentro de "holística".
+// Lookarounds con \p{L}\p{N} (y flag u): el \b clásico toma las letras con tilde
+// por separadores y casaría "acci" dentro de "acción".
 export function compilarDiccionario(entradas: Entrada[]): Compilada[] {
   return entradas.map((entrada) => ({
     entrada,

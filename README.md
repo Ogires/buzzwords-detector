@@ -10,7 +10,7 @@ Extensión de Chrome (Manifest V3) que **resalta la jerga corporativa** de cualq
 
 - **Cero permisos de host y cero rastreo.** No hay cuentas, ni cookies, ni analítica, ni datos personales. Lo único que puede descargar es el **catálogo de términos** (un JSON público) desde GitHub al pulsar el icono — sin datos tuyos dentro de la petición. Sin conexión o si la página lo bloquea, usa el catálogo empaquetado en la extensión.
 - **`activeTab`: no toca ninguna página hasta que tú pulsas el icono.** Ni contenido en segundo plano, ni historial.
-- No recopila nada porque no hay nada que recopilar.
+- No recopila nada porque no hay nada que recopilar. Detalle completo en la [política de privacidad](PRIVACY.md).
 
 ## 🔄 Catálogo actualizable sin tocar la extensión
 
@@ -55,7 +55,7 @@ El **Índice de Humo** = buzzwords por cada 1.000 palabras, con escala científi
 | low hanging fruit | lo más fácil de conseguir | la excusa más vaga disponible |
 | gran familia | equipo muy unido | nadie cobra las horas extra |
 
-220 términos en 6 categorías (estrategia, producto, reuniones, marketing, feedback y RRHH) — y creciendo vía JSON. Detalle técnico: las regex usan lookarounds unicode (`(?<![\p{L}])(?![\p{L}])`) porque `\b` no entiende acentos y matchearía *holistic* dentro de *holística*.
+220 términos en 6 categorías (estrategia, producto, reuniones, marketing, feedback y RRHH) — y creciendo vía JSON. Detalle técnico: las regex usan lookarounds unicode (`(?<![\p{L}])(?![\p{L}])`) porque `\b` toma las letras con tilde por separadores y casaría *acci* dentro de *acción*.
 
 ## Probarla en modo developer
 
@@ -70,13 +70,14 @@ npm run build
 2. **Cargar descomprimida** → selecciona la carpeta `dist/`.
 3. Abre cualquier web corporativa (o tu feed de LinkedIn) y pulsa el icono.
 
-Para testear: `npm test` (24 tests, Vitest + jsdom, sin red).
+Para testear: `npm test` (33 tests, Vitest + jsdom, sin red).
 
 ## Publicación en Chrome Web Store
 
 El CI genera `buzzwords-detector.zip` (artifact de cada build): súbelo tal cual en el
 [Developer Dashboard](https://chrome.google.com/webstore/devconsole) (cuenta de developer: 5 $ una sola vez).
 **Guía completa paso a paso (cuenta, formulario, permisos y review): [`docs/publicacion-cws.md`](docs/publicacion-cws.md).**
+Textos de la ficha, capturas 1280×800 y respuestas del formulario de privacidad: [`docs/store/`](docs/store/listing.md).
 Permisos a declarar: `activeTab` (análisis bajo demanda al pulsar el icono) y `scripting` (inyectar dicho análisis). Sin recopilación de datos.
 
 ## Stack

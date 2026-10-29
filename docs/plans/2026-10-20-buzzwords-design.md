@@ -49,7 +49,7 @@ Extensión de Chrome que, al pulsar su icono, **escanea la página actual, resal
 - **`activeTab` en vez de `<all_urls>`**: la extensión no toca nada hasta que el usuario pulsa el icono. Revisión de Chrome Web Store más fácil y sección de privacidad del README con un argumento real.
 - **TypeScript estricto + esbuild mínimo**: el playbook exige TS estricto; una extensión exige ficheros .js en el manifest, y esbuild los genera en milisegundos con una config de 5 líneas. Descartado vanilla JS sin types y Vite+crxjs (infra innecesaria para una tarde).
 - **Tooltip CSS puro** (data-attributes + regla `::after` propia): cero dependencias, cero JS de posicionamiento; todo con prefijo `bwd-` para no chocar con la página.
-- **Regex unicode con lookarounds** `(?<![\p{L}])patrón(?![\p{L}])` y flag `u`: `\b` no entiende acentos y casaría "holistic" dentro de "holística".
+- **Regex unicode con lookarounds** `(?<![\p{L}])patrón(?![\p{L}])` y flag `u`: `\b` toma las letras con tilde por separadores y casaría "acci" dentro de "acción".
 - **Vitest puro + jsdom** (SIN el plugin de Cloudflare: aquí no hay Worker; la lección 1 de AGENTS.md solo aplica a proyectos Worker).
 
 ## 4. Modelo de datos
