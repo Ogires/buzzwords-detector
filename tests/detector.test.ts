@@ -52,6 +52,17 @@ describe("buscarEnTexto", () => {
     expect(m[0].entrada.patron).toBe("value proposition");
   });
 
+  it.each([
+    ["corto primero", ["feedback", "feedback loop"]],
+    ["largo primero", ["feedback loop", "feedback"]],
+  ])("si dos matches empiezan igual gana el más largo (%s en el diccionario)", (_, patrones) => {
+    const c = compilarDiccionario(patrones.map(e));
+    const m = buscarEnTexto("cerramos el feedback loop", c);
+    expect(m).toHaveLength(1);
+    expect(m[0].entrada.patron).toBe("feedback loop");
+    expect(m[0]).toMatchObject({ inicio: 12, fin: 25 });
+  });
+
   it("devuelve la entrada con cada match", () => {
     const m = buscarEnTexto("quick win", compilarDiccionario([e("quick wins?")]));
     expect(m[0].entrada.real).toBe("real");

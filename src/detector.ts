@@ -34,7 +34,8 @@ export function buscarEnTexto(texto: string, diccionario: Compilada[]): Match[] 
     }
     regex.lastIndex = 0;
   }
-  todos.sort((a, b) => a.inicio - b.inicio || b.fin - a.fin - (a.fin - a.inicio));
+  // por inicio y, a igual inicio, el más largo primero
+  todos.sort((a, b) => a.inicio - b.inicio || b.fin - a.fin);
   const sinSolapes: Match[] = [];
   let ultimoFin = -1;
   for (const m of todos) {
